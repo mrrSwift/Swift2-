@@ -1957,6 +1957,15 @@ blockquote:before,
 }
 
 /* Google Map */
+
+#sizer {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+
+}
+
 .pt-contact #map {
     width: 100%;
     height: 300px;
