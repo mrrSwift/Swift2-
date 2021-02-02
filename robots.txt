@@ -1,16 +1,18 @@
 User-Agent: *
-Disallow: /
+Disallow: /js
 
 User-Agent: Googlebot
 Disallow: /404.html
 Disallow: /403.html
-Disallow: /js/*
+Disallow: /js
 
 User-Agent: Googlebot-Mobile
 Disallow: /404.html
-Disallow: /js/*
+Disallow: /403.html
+Disallow: /js
 
 User-Agent: Googlebot-Image
 Disallow: /404.html
+Disallow: /403.html
 
 Sitemap: http://mr-swift.ir/sitemap.xml
