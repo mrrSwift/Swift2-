@@ -643,7 +643,7 @@ blockquote span img {
  	height: 100%;
 	top: 0;
  	left: 0;
-	background-image: url('../img/home-bg.jpg');
+	background-image: url('../img/home-bg.webp');
 	-webkit-background-size: cover;
 			background-size: cover;
 	background-position: center;
