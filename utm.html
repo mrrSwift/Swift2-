@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>UTM Generator</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="css/sky-forms.css">
+    
+
+</head>
+<body class="bg-orange">
+<div class="body">
+
+   
+    <div class="sky-form">
+        <header>Swift UTM Builder</header>
+
+        <fieldset>
+
+            <section>
+                <label class="label">Website URL *</label>
+                <label class="input">
+                    <input type="text" name="website" id="website" placeholder="https://mr-swift.glitch.me/" data-valid="1">
+
+                </label>
+            </section>
+
+
+            <section>
+                <label class="label">Campaign Source *</label>
+                <label class="input">
+                    <input type="text" name="CampaignSource" id="CampaignSource"
+                           placeholder="example: google, telegram, linkedin" data-valid="1">
+                </label>
+            </section>
+
+
+            <section>
+                <label class="label">Campaign Medium *</label>
+                <label class="input">
+                    <input type="text" name="CampaignMedium" id="CampaignMedium"
+                           placeholder="example: cpc, banner, email, social" data-valid="1">
+                </label>
+            </section>
+            <section>
+                <label class="label">Campaign Name *</label>
+                <label class="input">
+                    <input type="text" name="CampaignName" id="CampaignName"
+                           placeholder="example: nowrooz, launch, 50off" data-valid="1">
+                </label>
+            </section>
+
+
+            <section>
+                <label class="label">Campaign Term</label>
+                <label class="input">
+                    <input type="text" name="CampaignTerm" id="CampaignTerm"
+                           placeholder="(optional) Identify the paid keywords" data-valid="0">
+                </label>
+            </section>
+
+
+            <section>
+                <label class="label">Campaign Content</label>
+                <label class="input">
+                    <input type="text" name="CampaignContent" id="CampaignContent"
+                           placeholder="(optional) use to differentiate ads" data-valid="0">
+                </label>
+            </section>
+
+            <section>
+                <button type="submit" id="buildutm" class="button middle">Build URL</button>
+            </section>
+
+
+            <section>
+                <label class="label" id="copy-success">Result</label>
+                <label class="textarea textarea-resizable">
+                    <textarea rows="3" placeholder="Result" name="result" id="result-in"></textarea>
+                </label>
+            </section>
+
+
+            <section>
+                <button type="submit" class="button middle" id="copy-btn" onclick="copy_fun(this)" data-id="result-in">
+                    Copy
+                </button>
+            </section>
+
+           
+
+        </fieldset>
+
+
+    </div>
+
+</div>
+
+<script>
+    let buildUtmBtn = document.querySelector("#buildutm");
+    let allInput = document.querySelectorAll("input");
+    let inputResult = document.querySelector("#result-in");
+
+    function utmGenerator(objUtm) {
+        let utmIdiom = {
+            url_utm: '',
+            CampaignSource: "?utm_source=",
+            CampaignMedium: "&utm_medium=",
+            CampaignName: "&utm_campaign=",
+            CampaignTerm: (objUtm.CampaignTerm != '') ? "&utm_term=" : '',
+            CampaignContent: (objUtm.CampaignContent != '') ? "&utm_content=" : '',
+        }
+
+        let utmParametrs = '';
+
+        for (let key in utmIdiom) {
+            if (objUtm[key] != '' && objUtm[key] != "") {
+                utmParametrs += utmIdiom[key];
+                utmParametrs += objUtm[key];
+            }
+        }
+        inputResult.value = "";
+        return utmParametrs;
+    }
+
+    function getInputToBuildUtm() {
+        let url_utm = document.querySelector("#website").value;
+        let CampaignSource = document.querySelector("#CampaignSource").value;
+        let CampaignMedium = document.querySelector("#CampaignMedium").value;
+        let CampaignName = document.querySelector("#CampaignName").value;
+        let CampaignTerm = document.querySelector("#CampaignTerm").value
+        let CampaignContent = document.querySelector("#CampaignContent").value
+
+
+        utmDtatInput = {
+            url_utm,
+            CampaignSource,
+            CampaignMedium,
+            CampaignName,
+            CampaignTerm,
+            CampaignContent,
+        }
+        return utmDtatInput;
+    }
+
+    function inputnValidator(arry) {
+        let i = 0;
+        arry.forEach(key => {
+            if (key.value == "" && key.getAttribute("data-valid") == "1") {
+                key.style.borderColor = "#ff1f1f";
+                i++;
+            } else {
+                key.style.borderColor = "#e5e5e5";
+            }
+
+        })
+        return i;
+    }
+
+    function copy_fun(e) {
+        let id = e.getAttribute("data-id");
+        let copytext = document.querySelector(`#${id}`);
+        copytext.select();
+        document.execCommand("copy");
+        let parenE = copytext.parentElement;
+        parenE.previousElementSibling.innerHTML = 'Copied';
+        parenE.previousElementSibling.style.color = "#6fb679";
+        if (copytext.value != '') {
+            e.innerHTML = 'Done:)';
+        }
+
+    }
+
+    
+
+    buildUtmBtn.addEventListener("click", function () {
+        if (inputnValidator(allInput) == 0) {
+
+            let dataInput = getInputToBuildUtm();
+            let utmsuccess = utmGenerator(dataInput);
+            inputResult.value = utmsuccess;
+			loadDocKutt(utmsuccess);
+			loadDocYun(utmsuccess);
+        }
+    })
+
+</script>
+
+
+</body>
+
+
+</html>
